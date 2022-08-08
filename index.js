@@ -40,6 +40,8 @@ function getBestSimilarityByLib() {
 }
 
 similarityMap = getBestSimilarityByLib();
+similarityMap2 = getBestSimilarity();
 console.log(similarityMap);
+console.log(similarityMap2);
 
 
