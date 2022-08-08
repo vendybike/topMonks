@@ -1,9 +1,29 @@
 let stringSimilarity = require("string-similarity");
 
-array1 = ['pavel', 'kuba', 'vasek'];
-array2 = ['kuba', 'vasek', 'pavel'];
+const inputs = [
+    [
+        ['pavel', 'kuba', 'vasek'],
+        ['kuba', 'vasek', 'pavel'],
+    ],
+    [
+        ['pavel', 'kuba', 'vasek'],
+        ['kuba25', 'vasek24', 'pavel23'],
+    ],
+    [
+        ['pavel', 'kuba', 'vasek', 'pavel'],
+        ['kuba', 'vasek', 'pavel', 'pavel'],
+    ],
+    [
+        ['pavel', 'pavel', 'pavel', 'pavel'],
+        ['pavel', 'pavel', 'pavel', 'pavel'],
+    ],
+    [
+        ['a', 'b', 'c', 'd'],
+        ['e', 'f', 'g', 'h'],
+    ],
+]
 
-function getBestSimilarity() {
+function getBestSimilarity(array1, array2) {
     let similarityMap = new Map();
     array1.forEach(element1 => {    // Projizdim cele pole, abych nasel vysledek ke kazdemu jednomu elementu
         if (!similarityMap.get(element1)) { // jestlize ve vysledne mape pro hledany klic jiz vysledek, nemusim ho hledat znovu
@@ -28,7 +48,7 @@ function getBestSimilarity() {
     return similarityMap;
 }
 
-function getBestSimilarityByLib() { // knihovna string-similarity jiz obsahuje funkci pro vyhledani nejlepsi shody (nezkoumal jsem jeji implementaci, takze jsem udelal 2 varianty)
+function getBestSimilarityByLib(array1, array2) { // knihovna string-similarity jiz obsahuje funkci pro vyhledani nejlepsi shody (nezkoumal jsem jeji implementaci, takze jsem udelal 2 varianty)
     let similarityMap = new Map();
     array1.forEach(element => {
         if (!similarityMap.get(element)) { // osetreni, jestli element z prvniho pole jiz byl vysetrovany
@@ -39,9 +59,19 @@ function getBestSimilarityByLib() { // knihovna string-similarity jiz obsahuje f
     return similarityMap
 }
 
-similarityMap = getBestSimilarityByLib();
-similarityMap2 = getBestSimilarity();
-console.log(similarityMap);
-console.log(similarityMap2);
+for (const input of inputs) {
 
+    similarityMap = getBestSimilarityByLib(input[0], input[1]);
+    similarityMap2 = getBestSimilarity(input[0], input[1]);
+
+    console.error('input ------------------')
+    console.error(input);
+
+    console.error('output')
+    for (const item of similarityMap) {
+        console.error(`${item[0]} - ${input[1][item[1].elementIndex]} - ${JSON.stringify(item[1])}`)
+    }
+    console.error(similarityMap);
+    console.error(similarityMap2);
+}
 
